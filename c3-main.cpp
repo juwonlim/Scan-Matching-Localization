@@ -151,7 +151,8 @@ int main(){
 			auto scan = boost::static_pointer_cast<csd::LidarMeasurement>(data);
 			for (auto detection : *scan){
 				if((detection.x*detection.x + detection.y*detection.y + detection.z*detection.z) > 8.0){
-					pclCloud.points.push_back(PointT(detection.x, detection.y, detection.z));
+					//pclCloud.points.push_back(PointT(detection.x, detection.y, detection.z)); //새 Carla 시뮬레이터의 x, y 좌표가 거꾸로 바뀌어서 발생하는 문제에 적합치 않음
+					pclCloud.points.push_back(PointT(-detection.y, detection.x, detection.z)); // 멘토가 주신 코드
 				}
 			}
 			if(pclCloud.points.size() > 5000){ // CANDO: Can modify this value to get different scan resolutions
