@@ -1,3 +1,8 @@
+## Project Writeup
+
+The detailed project writeup can be found [here](https://github.com/juwonlim/Scan-Matching-Localization/blob/main/writeup.pdf).
+
+
 # Instructions to Execute the Project
 
 1. Navigate to the **c3-project** directory containing the project starter files.
