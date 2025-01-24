@@ -1,4 +1,4 @@
-// 필요한 헤더 파일 포함
+
 #include <carla/client/Client.h>
 #include <carla/client/ActorBlueprint.h>
 #include <carla/client/BlueprintLibrary.h>
@@ -11,7 +11,6 @@
 
 #include <carla/client/Vehicle.h>
 
-// PCL 관련 헤더
 //pcl code
 //#include "render/render.h"
 
@@ -114,7 +113,6 @@ int main(){
 	auto ego_actor = world.SpawnActor((*vehicles)[12], transform);
 
 	//Create lidar
-    // Lidar 센서 생성
 	auto lidar_bp = *(blueprint_library->Find("sensor.lidar.ray_cast"));
 	// CANDO: Can modify lidar values to get different scan resolutions
 	lidar_bp.SetAttribute("upper_fov", "15");
@@ -152,8 +150,8 @@ int main(){
 		if(new_scan){
 			auto scan = boost::static_pointer_cast<csd::LidarMeasurement>(data);
 			for (auto detection : *scan){
-				if((detection.point.x*detection.point.x + detection.point.y*detection.point.y + detection.point.z*detection.point.z) > 8.0){ // Don't include points touching ego
-					pclCloud.points.push_back(PointT(detection.point.x, detection.point.y, detection.point.z));
+				if((detection.x*detection.x + detection.y*detection.y + detection.z*detection.z) > 8.0){
+					pclCloud.points.push_back(PointT(detection.x, detection.y, detection.z));
 				}
 			}
 			if(pclCloud.points.size() > 5000){ // CANDO: Can modify this value to get different scan resolutions
@@ -210,11 +208,12 @@ int main(){
 			voxel_filter.filter(*cloudFiltered);  // TODO: 필터링된 데이터를 cloudFiltered에 저장
 
 			// TODO: Find pose transform by using ICP or NDT matching
-	    	Eigen::Matrix4f transform; // 변환 행렬을 저장할 변수
-			//pose = ....
+			Eigen::Matrix4f transform; // 변환 행렬을 저장할 변수
+    
+            //pose = ....
             // TODO: (NDT 또는 ICP를 사용하여 변환 행렬 계산)
             //TODO: NDT를 사용하여 변환 행렬 계산
-			pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointXYZ> ndt;
+            pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointXYZ> ndt;
 			ndt.setResolution(1.0);                      // TODO: NDT 해상도 설정
 			ndt.setInputSource(cloudFiltered);           // TODO: 필터링된 소스 점 구름 설정
 			ndt.setInputTarget(mapCloud);                // TODO: 대상 점 구름(mapCloud) 설정
@@ -230,10 +229,10 @@ int main(){
     		pcl::transformPointCloud(*cloudFiltered, *transformedScan, transform); // TODO: 스캔 데이터를 변환 행렬로 변환
 
 			viewer->removePointCloud("scan"); // 기존의 스캔 데이터 제거
-			
-            // TODO: Change `scanCloud` below to your transformed scan
-			//renderPointCloud(viewer, scanCloud, "scan", Color(1,0,0) );
-            renderPointCloud(viewer, transformedScan, "scan", Color(1, 0, 0)); 
+		
+			// TODO: Change `scanCloud` below to your transformed scan
+			//renderPointCloud(viewer, scanCloud, "scan", Color(1,0,0) ); //scanCloud는 필터링된 원본 데이터를 표현하는 데 사용 
+            renderPointCloud(viewer, transformedScan, "scan", Color(1, 0, 0)); //transformedScan은 변환된 데이터를 렌더링하기 때문에, 스캔 데이터와 차량의 실제 위치를 맞추는 데 적합
 			// TODO: 변환된 스캔 데이터를 렌더링
 
 			viewer->removeAllShapes();
