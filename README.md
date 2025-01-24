@@ -60,3 +60,4 @@ If you encounter core dump on start up, just rerun and try again. Crash doesn't 
 Here is a glimpse of the running project.
 
 ![a glimpse of the running project](../../assets/L7_Project.png)
+"[![View Writeup](https://img.shields.io/badge/View-PDF-blue)](writeup.pdf)" 
