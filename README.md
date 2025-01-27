@@ -1,7 +1,7 @@
 ## Project Writeup
 
-The detailed project writeup can be found [here](https://github.com/juwonlim/Scan-Matching-Localization/blob/main/writeup.pdf).
-
+The detailed project English version writeup can be found [here](https://github.com/juwonlim/Scan-Matching-Localization/blob/main/writeup(Eng).pdf).
+한국어 버전 writeup은 여기에 링크가 있습니다 [here](https://github.com/juwonlim/Scan-Matching-Localization/blob/main/writeup(Kor).pdf).
 
 # Instructions to Execute the Project
 
